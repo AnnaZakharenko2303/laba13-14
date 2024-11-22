@@ -1,17 +1,5 @@
-def find_nearest_points(points):
-    """Находит ближайшую точку для каждой точки."""
-    result = []
-    for i, point in enumerate(points):
-        nearest_point = None
-        min_distance = float('inf')
-        for j, other_point in enumerate(points):
-            if i != j:
-                dist = distance(point, other_point)
-                if dist < min_distance:
-                    min_distance = dist
-                    nearest_point = other_point
-        result.append((point, nearest_point))
-    return result
+import threading
+import queue
 
 def calculate_nearest_points(points_queue):
     """Функция для запуска расчетов в отдельном потоке."""
@@ -29,6 +17,8 @@ def main_menu():
     points_queue = queue.Queue()  # Создаем очередь для передачи точек между потоками
     calculation_thread = threading.Thread(target=calculate_nearest_points, args=(points_queue,))
     calculation_thread.start()  # Запускаем поток для вычислений
+
+    points = []  # Инициализируем список точек
 
     while True:
         print("\nМеню:")
