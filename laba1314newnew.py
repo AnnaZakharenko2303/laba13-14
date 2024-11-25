@@ -1,6 +1,6 @@
 import threading
 import queue
-from kod1314 import find_nearest_points  # Импортируем функцию из вашего основного файла
+from kod1314 import find_nearest_points, generate_random_points, input_points  # Импортируем необходимые функции
 
 def calculate_nearest_points(points_queue):
     """Функция для запуска расчетов в отдельном потоке."""
@@ -12,6 +12,18 @@ def calculate_nearest_points(points_queue):
         for point, nearest in results:
             print(f"Точка {point} ближайшая точка {nearest}")
         points_queue.task_done()  # Указываем, что задача завершена
+
+def generate_and_display(num_points):
+    """Генерирует случайные точки и возвращает их."""
+    points = generate_random_points(num_points)  # Генерация случайных точек
+    print(f"Сгенерированные точки: {points}")
+    return points
+
+def input_and_display():
+    """Вводит точки вручную и возвращает их."""
+    points = input_points()  # Ввод точек вручную
+    print(f"Введенные точки: {points}")
+    return points
 
 def main_menu():
     """Главное меню приложения."""
@@ -32,10 +44,10 @@ def main_menu():
 
         if choice == '1':
             num_points = int(input("Введите количество случайных точек: "))
-            generate_and_display(num_points)
+            points = generate_and_display(num_points)  # Получаем сгенерированные точки
 
         elif choice == '2':
-            input_and_display()
+            points = input_and_display()  # Получаем введенные точки
 
         elif choice == '3':
             if not points:
